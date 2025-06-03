@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import connectDB from "./config/db.js";
 import userRoutes from "./routers/userRoutes.js";
 import newsRoutes from "./routers/newsRoutes.js";
+import productRoutes from "./routers/productRoutes.js";
 import cors from "cors";
 
 dotenv.config();
@@ -26,6 +27,7 @@ app.use(
 
 app.use("/api/users", userRoutes);
 app.use("/api/news", newsRoutes);
+app.use("/api/products", productRoutes);
 
 const port = process.env.PORT || 5001;
 

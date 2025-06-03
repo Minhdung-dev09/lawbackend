@@ -93,10 +93,21 @@ const deleteNews = asyncHandler(async (req, res) => {
   }
 });
 
+// Get top 5 most viewed news
+const getTopViewedNews = asyncHandler(async (req, res) => {
+  const news = await News.find()
+    .populate("author", "username")
+    .sort({ viewCount: -1 })
+    .limit(5);
+
+  res.json(news);
+});
+
 export {
   getAllNews,
   getNewsById,
   createNews,
   updateNews,
   deleteNews,
+  getTopViewedNews,
 }; 

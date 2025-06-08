@@ -9,16 +9,16 @@ import {
 
 const router = express.Router();
 
-// Get comments for a specific article with pagination
+// Lấy bình luận cho một bài viết cụ thể với phân trang
 router.get("/:articleId", getComments);
 
-// Create a new comment for an article
+// Tạo bình luận mới cho một bài viết
 router.post("/:articleId", protect, createComment);
 
-// Update a specific comment
+// Cập nhật một bình luận cụ thể
 router.put("/:commentId", protect, updateComment);
 
-// Delete a specific comment
+// Xóa một bình luận cụ thể
 router.delete("/:commentId", protect, deleteComment);
 
 export default router;

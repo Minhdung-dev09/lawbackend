@@ -1,9 +1,9 @@
 import asyncHandler from 'express-async-handler';
 import Comment from '../models/commentModel.js';
 
-// @desc    Get comments for an article
-// @route   GET /api/comments/:articleId
-// @access  Public
+// Mô tả: Lấy bình luận cho một bài viết
+// Đường dẫn: GET /api/comments/:articleId
+// Quyền truy cập: Công khai
 export const getComments = asyncHandler(async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 5;
@@ -25,9 +25,9 @@ export const getComments = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc    Create a comment
-// @route   POST /api/comments/:articleId
-// @access  Private
+// Mô tả: Tạo một bình luận mới
+// Đường dẫn: POST /api/comments/:articleId
+// Quyền truy cập: Riêng tư
 export const createComment = asyncHandler(async (req, res) => {
   const { content, rating } = req.body;
 
@@ -49,9 +49,9 @@ export const createComment = asyncHandler(async (req, res) => {
   res.status(201).json(populatedComment);
 });
 
-// @desc    Update a comment
-// @route   PUT /api/comments/:id
-// @access  Private
+// Mô tả: Cập nhật một bình luận
+// Đường dẫn: PUT /api/comments/:id
+// Quyền truy cập: Riêng tư
 export const updateComment = asyncHandler(async (req, res) => {
   const comment = await Comment.findById(req.params.id);
 
@@ -75,9 +75,9 @@ export const updateComment = asyncHandler(async (req, res) => {
   res.json(populatedComment);
 });
 
-// @desc    Delete a comment
-// @route   DELETE /api/comments/:id
-// @access  Private
+// Mô tả: Xóa một bình luận
+// Đường dẫn: DELETE /api/comments/:id
+// Quyền truy cập: Riêng tư
 export const deleteComment = asyncHandler(async (req, res) => {
   const comment = await Comment.findById(req.params.id);
 

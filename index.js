@@ -9,6 +9,7 @@ import productRoutes from "./routers/productRoutes.js";
 import consultationRoutes from "./routers/consultationRoutes.js";
 import commentRoutes from "./routers/commentRoutes.js";
 import cartRoutes from "./routers/cartRoutes.js";
+import orderRoutes from "./routers/orderRoutes.js";
 import cors from "cors";
 
 dotenv.config();
@@ -34,6 +35,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/consultations", consultationRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/cart", cartRoutes);
+app.use("/api/orders", orderRoutes);
 
 const port = process.env.PORT || 5001;
 

@@ -6,6 +6,8 @@ import connectDB from "./config/db.js";
 import userRoutes from "./routers/userRoutes.js";
 import newsRoutes from "./routers/newsRoutes.js";
 import productRoutes from "./routers/productRoutes.js";
+import consultationRoutes from "./routers/consultationRoutes.js";
+import commentRoutes from "./routers/commentRoutes.js";
 import cors from "cors";
 
 dotenv.config();
@@ -28,6 +30,8 @@ app.use(
 app.use("/api/users", userRoutes);
 app.use("/api/news", newsRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/consultations", consultationRoutes);
+app.use("/api/comments", commentRoutes);
 
 const port = process.env.PORT || 5001;
 

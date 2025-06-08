@@ -95,10 +95,22 @@ const deleteNews = asyncHandler(async (req, res) => {
 
 // Get top 5 most viewed news
 const getTopViewedNews = asyncHandler(async (req, res) => {
-  const news = await News.find()
+  const news = await News.find({ isPublished: true })
     .populate("author", "username")
     .sort({ viewCount: -1 })
     .limit(5);
+
+  res.json(news);
+});
+
+// Get latest news
+const getLatestNews = asyncHandler(async (req, res) => {
+  const limit = parseInt(req.query.limit) || 5;
+  
+  const news = await News.find({ isPublished: true })
+    .populate("author", "username")
+    .sort({ createdAt: -1 })
+    .limit(limit);
 
   res.json(news);
 });
@@ -110,4 +122,5 @@ export {
   updateNews,
   deleteNews,
   getTopViewedNews,
+  getLatestNews,
 }; 

@@ -6,6 +6,7 @@ import {
   updateNews,
   deleteNews,
   getTopViewedNews,
+  getLatestNews,
 } from "../controllers/newsController.js";
 import { protect, admin } from "../middlewares/authMiddleware.js";
 
@@ -14,6 +15,7 @@ const router = express.Router();
 // Public routes
 router.get("/", getAllNews);
 router.get("/top-viewed", getTopViewedNews);
+router.get("/latest", getLatestNews);
 router.get("/:id", getNewsById);
 
 // Admin only routes

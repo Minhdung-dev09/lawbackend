@@ -5,10 +5,12 @@ import createToken from "../untils/createToken.js";
 
 // Hàm tạo User mới
 const createUser = asyncHandler(async (req, res) => {
-  const { username, email, image, phone, password } = req.body;
+  const { username, email, phone, password } = req.body;
 
-  if (!username || !email || !password || !image) {
-    return res.status(400).json({ message: "Please fill all the required inputs." });
+  if (!username || !email || !password) {
+    return res
+      .status(400)
+      .json({ message: "Please fill all the required inputs." });
   }
 
   const userExists = await User.findOne({ email });
@@ -21,7 +23,6 @@ const createUser = asyncHandler(async (req, res) => {
   const newUser = new User({
     username,
     email,
-    image,
     phone,
     password: hashedPassword,
   });
@@ -34,13 +35,14 @@ const createUser = asyncHandler(async (req, res) => {
     res.status(201).json({
       _id: newUser._id,
       username: newUser.username,
-      image: newUser.image,
       email: newUser.email,
       phone: newUser.phone,
       isAdmin: newUser.isAdmin,
     });
   } catch (error) {
-    res.status(400).json({ message: "Không thể tạo người dùng, vui lòng thử lại!" });
+    res
+      .status(400)
+      .json({ message: "Không thể tạo người dùng, vui lòng thử lại!" });
   }
 });
 
@@ -51,7 +53,10 @@ const loginUser = asyncHandler(async (req, res) => {
   const existingUser = await User.findOne({ email });
 
   if (existingUser) {
-    const isPasswordValid = await bcrypt.compare(password, existingUser.password);
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      existingUser.password
+    );
     if (isPasswordValid) {
       const token = createToken(res, existingUser._id);
 
@@ -118,6 +123,7 @@ const updateCurrentUserProfile = asyncHandler(async (req, res) => {
     user.email = req.body.email || user.email;
     user.image = req.body.image || user.image;
     user.phone = req.body.phone || user.phone;
+    user.password = req.body.password || user.password;
 
     if (req.body.password) {
       const salt = await bcrypt.genSalt(10);
@@ -132,6 +138,7 @@ const updateCurrentUserProfile = asyncHandler(async (req, res) => {
       username: updatedUser.username,
       image: updatedUser.image,
       email: updatedUser.email,
+      password: updatedUser.password,
       phone: updatedUser.phone,
       isAdmin: updatedUser.isAdmin,
     });

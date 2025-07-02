@@ -1,21 +1,20 @@
 import asyncHandler from "../middlewares/asyncHandler.js";
 import Cart from "../models/cartModel.js";
-import Product from "../models/productModel.js";
+import Product from "../models/ProductModel.js";
 
 // Get user's cart
 const getCart = asyncHandler(async (req, res) => {
-  const cart = await Cart.findOne({ user: req.user._id })
-    .populate({
-      path: 'items.product',
-      select: 'name image price'
-    });
+  const cart = await Cart.findOne({ user: req.user._id }).populate({
+    path: "items.product",
+    select: "name image price",
+  });
 
   if (!cart) {
     // If cart doesn't exist, create a new empty cart
     const newCart = await Cart.create({
       user: req.user._id,
       items: [],
-      totalAmount: 0
+      totalAmount: 0,
     });
     return res.json(newCart);
   }
@@ -40,13 +39,13 @@ const addToCart = asyncHandler(async (req, res) => {
     cart = await Cart.create({
       user: req.user._id,
       items: [],
-      totalAmount: 0
+      totalAmount: 0,
     });
   }
 
   // Check if product already in cart
   const existingItemIndex = cart.items.findIndex(
-    item => item.product.toString() === productId
+    (item) => item.product.toString() === productId
   );
 
   if (existingItemIndex > -1) {
@@ -57,7 +56,7 @@ const addToCart = asyncHandler(async (req, res) => {
     cart.items.push({
       product: productId,
       quantity,
-      price: product.price
+      price: product.price,
     });
   }
 
@@ -67,8 +66,8 @@ const addToCart = asyncHandler(async (req, res) => {
 
   // Return populated cart
   const updatedCart = await Cart.findById(cart._id).populate({
-    path: 'items.product',
-    select: 'name image price'
+    path: "items.product",
+    select: "name image price",
   });
 
   res.json(updatedCart);
@@ -90,7 +89,7 @@ const updateCartItem = asyncHandler(async (req, res) => {
   }
 
   const itemIndex = cart.items.findIndex(
-    item => item.product.toString() === productId
+    (item) => item.product.toString() === productId
   );
 
   if (itemIndex === -1) {
@@ -103,8 +102,8 @@ const updateCartItem = asyncHandler(async (req, res) => {
   await cart.save();
 
   const updatedCart = await Cart.findById(cart._id).populate({
-    path: 'items.product',
-    select: 'name image price'
+    path: "items.product",
+    select: "name image price",
   });
 
   res.json(updatedCart);
@@ -121,15 +120,15 @@ const removeFromCart = asyncHandler(async (req, res) => {
   }
 
   cart.items = cart.items.filter(
-    item => item.product.toString() !== productId
+    (item) => item.product.toString() !== productId
   );
 
   cart.calculateTotalAmount();
   await cart.save();
 
   const updatedCart = await Cart.findById(cart._id).populate({
-    path: 'items.product',
-    select: 'name image price'
+    path: "items.product",
+    select: "name image price",
   });
 
   res.json(updatedCart);
@@ -150,10 +149,4 @@ const clearCart = asyncHandler(async (req, res) => {
   res.json(cart);
 });
 
-export {
-  getCart,
-  addToCart,
-  updateCartItem,
-  removeFromCart,
-  clearCart
-}; 
+export { getCart, addToCart, updateCartItem, removeFromCart, clearCart };

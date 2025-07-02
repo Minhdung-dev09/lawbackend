@@ -24,8 +24,8 @@ app.use(cookieParser());
 // Cấu hình CORS cho phép frontend gửi cookie
 app.use(
   cors({
-    origin: "http://localhost:3000" || "https://sushilaw.io.vn",  // Phải đúng địa chỉ frontend của bạn
-    credentials: true,                  // Cho phép gửi cookie trong request
+    origin: "http://localhost:3000" || "https://sushilaw.io.vn", // Phải đúng địa chỉ frontend của bạn
+    credentials: true, // Cho phép gửi cookie trong request
   })
 );
 
